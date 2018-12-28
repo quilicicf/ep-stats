@@ -1,8 +1,10 @@
 # ep-stats
 
-> Highly experimental statistics extractor for the game Empires &amp; Puzzles.
+> Highly experimental statistics extractor for the game Empires &amp; Puzzles (available on [Android](https://play.google.com/store/apps/details?id=com.smallgiantgames.empires) & [iOS](https://itunes.apple.com/app/id1117841866)).
 
 ## Disclaimer
+
+I am not linked to small giant games (game developer) in any way.
 
 This project is experimental and developed for the fun on my free time.
 
