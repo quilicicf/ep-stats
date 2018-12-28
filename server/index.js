@@ -43,7 +43,9 @@ app.post('/', upload.single('file'), async (request, response) => {
 
     process.stdout.write(`File written to ${fileNewPath}\n`);
     const scores = _.values(parseOcr(fileNewPath));
-    await append(sheetId, year, [ formattedDate, ...scores ]);
+    const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
+    const values = [ formattedDate, ...scores, totalScore ];
+    await append(sheetId, year, values);
     response.json({ message: 'File uploaded successfully' });
   });
 });
