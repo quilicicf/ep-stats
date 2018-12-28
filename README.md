@@ -34,7 +34,10 @@ It uses [tesseract](https://github.com/tesseract-ocr/tesseract/wiki) to get the 
 git clone git@github.com:quilicicf/ep-stats.git
 cd ep-stats
 npm install
-npm start
+
+# Get the value of SHEET_ID from the URL of your sheet that looks like this:
+# https://docs.google.com/spreadsheets/d/$SHEET_ID/edit#gid=0
+npm start "$SHEET_ID"
 ```
 
 You can then open `http://[host address]:12012` where `host address` is the address displayed in the stdout of the command `npm start`.
