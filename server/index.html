@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload E&amp;P stats</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+  <style>
+    body {
+      width: 50%;
+      margin: 5em auto;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #888;
+      padding: 1em;
+      border-radius: 5px;
+      box-shadow: 5px 5px 10px #888;
+    }
+
+    .btn {
+      max-width: 150px;
+    }
+  </style>
+</head>
+
+<script>
+  function postImage () {
+    const fileField = document.getElementById('file');
+    const file = fileField.files[ 0 ];
+    const statusOkField = document.getElementById('status-ok');
+    const statusKoField = document.getElementById('status-ko');
+
+    statusKoField.innerText = '';
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('type', 'titan'); // TODO: un-mock
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://127.0.0.1:12012');
+
+    xhr.onload = function () {
+      if (xhr.readyState !== 4) {
+        console.log('Not ready');
+        return;
+      }
+
+      if (xhr.status === 200) {
+        statusOkField.innerText = JSON.parse(xhr.responseText).message;
+        fileField.value = '';
+        setTimeout(() => statusOkField.innerText = '', 1000);
+        return;
+      }
+
+      statusKoField.innerText = xhr.statusText;
+    };
+
+    xhr.send(formData);
+  }
+</script>
+
+<body>
+<form action="" method="get">
+  <h1>War result upload</h1>
+  <div class="form-group">
+    <label for="file">Screenshot of results</label>
+    <input type="file" name="file" id="file" class="form-control-file form-control-lg" size="50"/>
+  </div>
+
+  <input type="button" value="Upload File" class="btn btn-primary" onclick="postImage()"/>
+
+  <div>
+    <span id="status-ok" class="valid-feedback"></span>
+    <span id="status-ko" class="invalid-feedback"></span>
+  </div>
+</form>
+</body>
+</html>

@@ -59,3 +59,14 @@ typings/
 
 # next.js build output
 .next
+
+## IDE
+
+.idea
+*.iml
+
+## App's ignores
+
+/server/files
+credentials.json
+token.json
