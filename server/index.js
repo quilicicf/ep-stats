@@ -23,9 +23,8 @@ const PORT = portOverwrite || 12012;
 const app = express();
 const upload = multer({ dest: resolvePath(__dirname, 'files') });
 
-app.get('/', (req, res) => {
-  res.sendFile(resolvePath(__dirname, 'index.html'));
-});
+app.get('/', (request, response) => response.sendFile(resolvePath(__dirname, 'website', 'index.html')));
+app.get('/app.js', (request, response) => response.sendFile(resolvePath(__dirname, 'website', 'app.js')));
 
 // File input field name is simply 'file'
 app.post('/', upload.single('file'), async (request, response) => {
@@ -44,7 +43,7 @@ app.post('/', upload.single('file'), async (request, response) => {
     process.stdout.write(`File written to ${fileNewPath}\n`);
     const scores = _.values(parseOcr(fileNewPath));
     const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
-    const values = [ formattedDate, ...scores, totalScore ];
+    const values = [ formattedDate, totalScore, request.body.bonus, ...scores ];
     await append(sheetId, year, values);
     response.json({ message: 'File uploaded successfully' });
   });

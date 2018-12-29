@@ -51,10 +51,10 @@ You can then open `http://[host address]:12012` where `host address` is the addr
 |Item|Day of implementation|
 |---|---|
 |Add full alliance stats (only member performance was added)|2018_12_28|
+|Add war bonus in stats|2018_12_29|
 
 ### TODO
 
-- [ ] Add war bonus in stats
 - [ ] Add titans page
 - [ ] Auto sheet creation for new year
 - [ ] Retrieve member's list from the GSheet (currently copied both in the sheet and the server)
