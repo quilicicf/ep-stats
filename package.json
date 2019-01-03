@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./server/index.js"
+    "start": "node ./server/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dateformat": "3.0.3",
+    "date-fns": "1.30.1",
     "express": "4.16.4",
     "googleapis": "27.0.0",
     "ip": "1.1.5",
