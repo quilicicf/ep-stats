@@ -6,6 +6,7 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
         crossorigin="anonymous">
+
   <style>
     body {
       width: 50%;
@@ -27,11 +28,25 @@
   </style>
 </head>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
+        integrity="sha256-7/yoZS3548fXSRXqc/xYzjsmuW3sFKzuvOCHd06Pmps="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"
+        integrity="sha256-wCBClaCr6pJ7sGU5kfb3gQMOOcIZNzaWpWcj/lD9Vfk="
+        crossorigin="anonymous"></script>
 <script src="app.js"></script>
 
 <body>
 <form action="" method="get">
   <h1>War result upload</h1>
+  <div class="form-group">
+    <label for="warDate">Date</label>
+    <select name="warDate" id="warDate" class="form-control"></select>
+  </div>
+  <div class="form-group">
+    <label for="warEnemyScore">Enemy score</label>
+    <input type="number" id="warEnemyScore" class="form-control" value="2000" step="100" />
+  </div>
   <div class="form-group">
     <label>War defense bonus</label>
     <div class="form-check">
@@ -52,10 +67,10 @@
 
   <div class="form-group">
     <label for="file">Screenshot of results</label>
-    <input type="file" name="file" id="file" class="form-control-file form-control-lg" size="50"/>
+    <input type="file" name="file" id="file" class="form-control-file form-control-lg" size="50" />
   </div>
 
-  <input type="button" value="Upload File" class="btn btn-primary" onclick="postImage()"/>
+  <input type="button" value="Upload File" class="btn btn-primary" onclick="postImage()" />
 
   <div>
     <span id="status-ok" class="valid-feedback"></span>
