@@ -37,6 +37,9 @@ git clone git@github.com:quilicicf/ep-stats.git
 cd ep-stats
 npm install
 
+# At first launch only, allow ep-stats to push on you spreadsheet
+npm run bootstrap
+
 # Get the value of SHEET_ID from the URL of your sheet that looks like this:
 # https://docs.google.com/spreadsheets/d/$SHEET_ID/edit#gid=0
 npm start "$SHEET_ID"
