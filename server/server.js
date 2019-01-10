@@ -23,8 +23,8 @@ const PORT = portOverwrite || 12012;
 const app = express();
 const upload = multer({ dest: resolvePath(__dirname, 'files') });
 
-app.get('/', (request, response) => response.sendFile(resolvePath(__dirname, 'website', 'index.html')));
-app.get('/app.js', (request, response) => response.sendFile(resolvePath(__dirname, 'website', 'app.js')));
+app.get('/wars', (request, response) => response.sendFile(resolvePath(__dirname, 'website', 'wars.html')));
+app.get('/wars.js', (request, response) => response.sendFile(resolvePath(__dirname, 'website', 'wars.js')));
 
 // File input field name is simply 'file'
 app.post('/', upload.single('file'), async (request, response) => {

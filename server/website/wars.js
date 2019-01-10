@@ -8,13 +8,14 @@ const { _, dateFns: df } = window;
 const getWarDaysOffsets = (weeksNumber, seed = []) => {
   if (weeksNumber === 1) { return [ ...seed, WEDNESDAY_OFFSET, SATURDAY_OFFSET ]; }
 
+  const newWeeksNumber = weeksNumber - 1;
   const newSeed = [
     ...seed,
-    WEDNESDAY_OFFSET - (7 * weeksNumber),
-    SATURDAY_OFFSET - (7 * weeksNumber),
+    WEDNESDAY_OFFSET - (7 * newWeeksNumber),
+    SATURDAY_OFFSET - (7 * newWeeksNumber),
   ];
 
-  return getWarDaysOffsets(weeksNumber - 1, newSeed);
+  return getWarDaysOffsets(newWeeksNumber, newSeed);
 };
 
 const getDayToSelect = (now, warDates) => _(warDates)
