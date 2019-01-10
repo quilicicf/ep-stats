@@ -55,6 +55,8 @@ You can then open `http://[host address]:12012` where `host address` is the addr
 |---|---|
 |Add full alliance stats (only member performance was added)|2018_12_28|
 |Add war bonus in stats|2018_12_29|
+|Add war date selector|2019_01_07|
+|Add war enemy score in stats|2019_01_07|
 
 ### TODO
 
