@@ -1,9 +1,15 @@
-const DAY_LABEL_FORMAT = 'ddd Do MMMM YYYY';
-const DAY_ID_FORMAT = 'YYYY-MM-DD';
+import _ from 'lodash';
+
+import format from 'date-fns/format';
+import addDays from 'date-fns/addDays';
+import isAfter from 'date-fns/isAfter';
+import isEqual from 'date-fns/isEqual';
+import startOfWeek from 'date-fns/startOfWeek';
+
+import CONSTANTS from '../constants';
+
 const WEDNESDAY_OFFSET = 2;
 const SATURDAY_OFFSET = 5;
-
-const { _, dateFns: df } = window;
 
 const getWarDaysOffsets = (weeksNumber, seed = []) => {
   if (weeksNumber === 1) { return [ ...seed, WEDNESDAY_OFFSET, SATURDAY_OFFSET ]; }
@@ -19,20 +25,20 @@ const getWarDaysOffsets = (weeksNumber, seed = []) => {
 };
 
 const getDayToSelect = (now, warDates) => _(warDates)
-  .filter(warDate => df.isAfter(now, warDate))
+  .filter(warDate => isAfter(now, warDate))
   .last();
 
-window.onload = () => {
+window.loadWarsPage = () => {
   const now = new Date();
-  const startOfCurrentWeek = df.startOfWeek(now, { weekStartsOn: 1 /* Monday */ });
+  const startOfCurrentWeek = startOfWeek(now, { weekStartsOn: 1 /* Monday */ });
   const warDaysOffsets = getWarDaysOffsets(3);
-  const warDates = _.map(warDaysOffsets, warDayOffset => df.addDays(startOfCurrentWeek, warDayOffset));
+  const warDates = _.map(warDaysOffsets, warDayOffset => addDays(startOfCurrentWeek, warDayOffset));
   const warDays = _.map(
     warDates,
     warDate => ({
       date: warDate,
-      label: df.format(warDate, DAY_LABEL_FORMAT),
-      value: df.format(warDate, DAY_ID_FORMAT),
+      label: format(warDate, CONSTANTS.DAY_LABEL_FORMAT),
+      value: format(warDate, CONSTANTS.DAY_ID_FORMAT),
     }),
   );
 
@@ -44,7 +50,7 @@ window.onload = () => {
       const domElement = document.createElement('option');
       domElement.innerText = warDay.label;
       domElement.value = warDay.value;
-      if (df.isEqual(warDay.date, selectedDay)) {
+      if (isEqual(warDay.date, selectedDay)) {
         domElement.setAttribute('selected', 'selected');
       }
       warDatesSelect.appendChild(domElement);
@@ -52,16 +58,16 @@ window.onload = () => {
 };
 
 
-window.postImage = () => {
+window.postWarImage = () => {
   const warDateField = document.getElementById('warDate');
   const enemyScoreField = document.getElementById('warEnemyScore');
   const bonusField = document.querySelector('input[name="warBonusRadios"]:checked');
 
-  const fileField = document.getElementById('file');
+  const fileField = document.getElementById('warFile');
   const file = fileField.files[ 0 ];
 
-  const statusOkField = document.getElementById('status-ok');
-  const statusKoField = document.getElementById('status-ko');
+  const statusOkField = document.getElementById('wars-status-ok');
+  const statusKoField = document.getElementById('wars-status-ko');
 
   statusKoField.innerText = '';
 
@@ -70,10 +76,9 @@ window.postImage = () => {
   formData.append('enemyScore', enemyScoreField.value);
   formData.append('bonus', bonusField.value);
   formData.append('file', file);
-  formData.append('type', 'war'); // TODO: un-mock
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:12012');
+  xhr.open('POST', 'http://127.0.0.1:12012/wars'); // TODO: extract
 
   xhr.onload = () => {
     if (xhr.readyState !== 4) {

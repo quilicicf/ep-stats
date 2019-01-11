@@ -67,6 +67,13 @@ typings/
 
 ## App's ignores
 
-/server/files
+# Parcel
+/.cache
+/dist
+
+# Uploaded content
+/server/back/*/files
+
+# Sensitive
 credentials.json
 token.json
