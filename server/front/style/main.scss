@@ -1,0 +1,26 @@
+@import '~bootstrap/scss/bootstrap';
+
+@import './rating';
+@import './titans';
+
+#content {
+  width: 75%;
+  margin: 5em auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #888;
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px #888;
+}
+
+.btn {
+  max-width: 150px;
+}
+
+.custom-file {
+  margin-bottom: 2em;
+}
