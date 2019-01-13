@@ -32,20 +32,61 @@ It uses [tesseract](https://github.com/tesseract-ocr/tesseract/wiki) to get the 
 
 > Note: you'll need to install tesseract and NodeJS first.
 
+### Create the spreadsheet
+
+Create a google spreadsheet from your google account.
+
+:warning: You'll need to keep this spreadsheet up-to-date when a new player joins in! Otherwise his stats won't be added.
+
+#### Add members
+
+Create a sheet named `Members` that looks like this:
+
+|Pseudo|Regex|
+|---|---|
+|PseudoOfPlayer1||
+|PseudoOfPlayer2||
+|PseudoOfPlayer3||
+|PseudoOfPlayer4||
+
+The regex field should only be used if tesseract has troubles parsing the name of a player.
+
+Example: If `ImMaryPoppinsYall` gets parsed as `|mMaryPoppinsYa|l`, you can put the regex `[|Il]mMaryPoppinsYa[|Il]{2}` to fix the parsed results.
+
+#### Wars
+
+Create a sheet name `Wars_<YEAR>` that looks like the example below. Only crate the header row, the rest will be created by the program (the second line is here to show an example of the data).
+
+|War date \ Member|Total|Enemy score|Bonus|PseudoOfPlayer1|PseudoOfPlayer2|...|
+|---|---|---|---|---|---|---|
+|24_12|2456|3201|ARROWS|123|437|...|
+
+#### Titans
+
+Create a sheet name `Titans_<YEAR>` that looks like the example below. Only crate the header row, the rest will be created by the program (the second line is here to show an example of the data).
+
+|Titan date \ Member|Total|Life|Stars|Color|PseudoOfPlayer1|PseudoOfPlayer2|...|
+|---|---|---|---|---|---|---|---|
+|24_12|1327000|1327000|6|HOLY|77000|144524|...|
+
+### Configure and run the server
+
 ```shell
 git clone git@github.com:quilicicf/ep-stats.git
 cd ep-stats
 npm install
 
 # At first launch only, allow ep-stats to push on you spreadsheet
+# When your internet browser opens, log in to the account with which you craeted the sheet of course
 npm run bootstrap
 
 # Get the value of SHEET_ID from the URL of your sheet that looks like this:
 # https://docs.google.com/spreadsheets/d/$SHEET_ID/edit#gid=0
-npm start "$SHEET_ID"
+npm run start:back "$SHEET_ID"
+npm run start:front
 ```
 
-You can then open `http://[host address]:12012` where `host address` is the address displayed in the stdout of the command `npm start`.
+You can then open `http://[host address]:12011` where `host address` is the address displayed in the stdout of the command `npm run start:front`.
 
 ## Roadmap
 
@@ -57,9 +98,9 @@ You can then open `http://[host address]:12012` where `host address` is the addr
 |Add war bonus in stats|2018_12_29|
 |Add war date selector|2019_01_07|
 |Add war enemy score in stats|2019_01_07|
+|Add titans page|2019_01_13|
+|Retrieve member's list from the GSheet|2019_01_13|
 
 ### TODO
 
-- [ ] Add titans page
 - [ ] Auto sheet creation for new year
-- [ ] Retrieve member's list from the GSheet (currently copied both in the sheet and the server)
