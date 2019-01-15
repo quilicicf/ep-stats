@@ -39,7 +39,8 @@ window.postTitansImage = () => {
   formData.append('file', file);
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:12012/titans'); // TODO: extract
+  const host = document.location.host;
+  xhr.open('POST', `http://${host.replace(/:[0-9]+/, ':12012')}/titans`);
 
   xhr.onload = () => {
     if (xhr.readyState !== 4) {

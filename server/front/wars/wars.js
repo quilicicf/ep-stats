@@ -78,7 +78,8 @@ window.postWarImage = () => {
   formData.append('file', file);
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://127.0.0.1:12012/wars'); // TODO: extract
+  const host = document.location.host;
+  xhr.open('POST', `http://${host.replace(/:[0-9]+/, ':12012')}/wars`);
 
   xhr.onload = () => {
     if (xhr.readyState !== 4) {
