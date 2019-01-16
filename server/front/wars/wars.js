@@ -6,6 +6,8 @@ import isAfter from 'date-fns/isAfter';
 import isEqual from 'date-fns/isEqual';
 import startOfWeek from 'date-fns/startOfWeek';
 
+import displayLoadingInButton from '../displayLoadingInButton';
+
 import CONSTANTS from '../constants';
 
 const WEDNESDAY_OFFSET = 2;
@@ -66,37 +68,30 @@ window.postWarImage = () => {
   const fileField = document.getElementById('warFile');
   const file = fileField.files[ 0 ];
 
-  const statusOkField = document.getElementById('wars-status-ok');
-  const statusKoField = document.getElementById('wars-status-ko');
-
-  statusKoField.innerText = '';
-
   const formData = new FormData();
   formData.append('date', warDateField.options[ warDateField.selectedIndex ].value);
   formData.append('enemyScore', enemyScoreField.value);
   formData.append('bonus', bonusField.value);
   formData.append('file', file);
 
-  const xhr = new XMLHttpRequest();
-  const host = document.location.host;
-  xhr.open('POST', `http://${host.replace(/:[0-9]+/, ':12012')}/wars`);
+  const sendPromise = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const { host } = document.location;
+    xhr.open('POST', `http://${host.replace(/:[0-9]+/, ':12012')}/wars`, true);
 
-  xhr.onload = () => {
-    if (xhr.readyState !== 4) {
-      return;
-    }
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        return resolve(JSON.parse(xhr.responseText).message);
+      }
 
-    if (xhr.status === 200) {
-      statusOkField.innerText = JSON.parse(xhr.responseText).message;
-      fileField.value = '';
-      setTimeout(() => {
-        statusOkField.innerText = '';
-      }, 1000);
-      return;
-    }
+      return reject();
+    };
 
-    statusKoField.innerText = xhr.statusText;
-  };
+    xhr.onerror = () => reject();
 
-  xhr.send(formData);
+    xhr.send(formData);
+  });
+
+  const button = document.getElementById('wars-btn');
+  displayLoadingInButton(button, sendPromise);
 };

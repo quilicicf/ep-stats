@@ -52,7 +52,7 @@
           <label for="star7" title="text">7 stars</label>
           <input type="radio" id="star6" name="rate" value="6" />
           <label for="star6" title="text">6 stars</label>
-          <input type="radio" id="star5" name="rate" value="5" />
+          <input type="radio" id="star5" name="rate" value="5" checked />
           <label for="star5" class="multiple-of-5" title="text">5 stars</label>
           <input type="radio" id="star4" name="rate" value="4" />
           <label for="star4" title="text">4 stars</label>
@@ -105,12 +105,9 @@
         <label class="custom-file-label" for="titanFile">Screenshot of results</label>
       </div>
 
-      <input type="button" value="Upload File" class="btn btn-primary" onclick="postTitansImage()" />
-
-      <div>
-        <span id="titans-status-ok" class="valid-feedback"></span>
-        <span id="titans-status-ko" class="invalid-feedback"></span>
-      </div>
+      <button id="titans-btn" type="button" class="btn btn-primary" onclick="postTitansImage()">
+        Upload File
+      </button>
     </form>
   </div>
 
@@ -148,12 +145,9 @@
         <label class="custom-file-label" for="warFile">Screenshot of results</label>
       </div>
 
-      <input type="button" value="Upload File" class="btn btn-primary" onclick="postWarImage()" />
-
-      <div>
-        <span id="wars-status-ok" class="valid-feedback"></span>
-        <span id="wars-status-ko" class="invalid-feedback"></span>
-      </div>
+      <button id="wars-btn" type="button" class="btn btn-primary" onclick="postWarImage()">
+        Upload File
+      </button>
     </form>
   </div>
 </div>

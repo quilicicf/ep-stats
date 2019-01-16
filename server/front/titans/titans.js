@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import flatpickr from 'flatpickr';
+import displayLoadingInButton from '../displayLoadingInButton';
 
 const FIELDS = {
   FORM: null,
@@ -21,11 +22,6 @@ window.loadTitansPage = () => {
 };
 
 window.postTitansImage = () => {
-  const statusOkField = document.getElementById('titans-status-ok');
-  const statusKoField = document.getElementById('titans-status-ko');
-
-  statusKoField.innerText = '';
-
   const colorField = document.querySelector('input[name="titanColorRadios"]:checked');
   const titanCheckedField = document.querySelector('.rate > input[type=radio]:checked');
   const fileField = document.getElementById('titanFile');
@@ -38,26 +34,24 @@ window.postTitansImage = () => {
   formData.append('color', colorField.value);
   formData.append('file', file);
 
-  const xhr = new XMLHttpRequest();
-  const host = document.location.host;
-  xhr.open('POST', `http://${host.replace(/:[0-9]+/, ':12012')}/titans`);
+  const sendPromise = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const { host } = document.location;
+    xhr.open('POST', `http://${host.replace(/:[0-9]+/, ':12012')}/titans`, true);
 
-  xhr.onload = () => {
-    if (xhr.readyState !== 4) {
-      return;
-    }
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        return resolve(JSON.parse(xhr.responseText).message);
+      }
 
-    if (xhr.status === 200) {
-      statusOkField.innerText = JSON.parse(xhr.responseText).message;
-      fileField.value = '';
-      setTimeout(() => {
-        statusOkField.innerText = '';
-      }, 1000);
-      return;
-    }
+      return reject();
+    };
 
-    statusKoField.innerText = xhr.statusText;
-  };
+    xhr.onerror = () => reject();
 
-  xhr.send(formData);
+    xhr.send(formData);
+  });
+
+  const button = document.getElementById('titans-btn');
+  displayLoadingInButton(button, sendPromise);
 };

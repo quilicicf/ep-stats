@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import 'flatpickr/dist/flatpickr.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 import './style/main.scss';
 

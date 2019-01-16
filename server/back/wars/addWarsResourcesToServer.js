@@ -12,6 +12,14 @@ const WARS_PATH = 'wars';
 const upload = multer({ dest: resolvePath(__dirname, 'files') });
 
 module.exports = (app, sheetId) => {
+
+  // CORS
+  app.use((request, response, next) => {
+    response.header('Access-Control-Allow-Origin', '*');
+    response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+
   // File input field name is simply 'file'
   app.post(`/${WARS_PATH}`, upload.single('file'), async (request, response) => {
     const { bonus, date, enemyScore } = request.body;
