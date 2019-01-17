@@ -3,7 +3,7 @@ const multer = require('multer');
 const { resolve: resolvePath } = require('path');
 const { parse: parseDate, format: formatDate } = require('date-fns');
 
-const listMembers = require('../../../lib/gsheet/listMembers');
+const listMembers = require('../../../lib/listMembers');
 const rename = require('../../../lib/rename');
 const parseOcr = require('../../../lib/parseOcr');
 const append = require('../../../lib/gsheet/append');
@@ -45,7 +45,8 @@ module.exports = (app, sheetId) => {
       process.stdout.write(`File written to ${fileNewPath}\n`);
 
       const members = await listMembers(sheetId);
-      const scores = _.values(parseOcr(members, fileNewPath));
+      const scoresByNames = parseOcr(members, fileNewPath);
+      const scores = _.values(scoresByNames);
       const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
       const values = [ formattedDate, totalScore, life, stars, color, ...scores ];
 

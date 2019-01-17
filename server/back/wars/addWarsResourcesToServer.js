@@ -34,7 +34,8 @@ module.exports = (app, sheetId) => {
       await rename(request.file.path, fileNewPath);
       process.stdout.write(`File written to ${fileNewPath}\n`);
 
-      const scores = _.values(parseOcr(fileNewPath));
+      const scoresByNames = parseOcr(fileNewPath);
+      const scores = _.values(scoresByNames);
       const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
       const values = [ formattedDate, totalScore, enemyScore, bonus, ...scores ];
 
