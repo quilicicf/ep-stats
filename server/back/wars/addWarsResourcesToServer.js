@@ -6,7 +6,7 @@ const { parse: parseDate, format: formatDate } = require('date-fns');
 const rename = require('../../../lib/rename');
 const parseOcr = require('../../../lib/parseOcr');
 const append = require('../../../lib/gsheet/append');
-const listMembers = require('../../../lib/gsheet/listMembers');
+const listMembers = require('../../../lib/listMembers');
 
 const { DAY_ID_FORMAT } = require('../constants');
 
