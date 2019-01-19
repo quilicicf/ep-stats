@@ -74,6 +74,9 @@ typings/
 # Uploaded content
 /server/back/*/files
 
+# Server configuration
+/server/back/config.json
+
 # Sensitive
 credentials.json
 token.json
