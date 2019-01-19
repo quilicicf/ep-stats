@@ -30,7 +30,14 @@ It uses [tesseract](https://github.com/tesseract-ocr/tesseract/wiki) to get the 
 
 ## How to run it
 
-> Note: you'll need to install tesseract and NodeJS first.
+
+### Pre-requisites
+
+You'll need to install
+
+* [tesseract](https://github.com/tesseract-ocr/tesseract/wiki)
+* [NodeJS](https://nodejs.org/en/download/)
+* [git](https://github.com/git/git)
 
 ### Create the spreadsheet
 
@@ -82,11 +89,22 @@ npm run bootstrap
 
 # Get the value of SHEET_ID from the URL of your sheet that looks like this:
 # https://docs.google.com/spreadsheets/d/$SHEET_ID/edit#gid=0
+# It is only required at first launch and will be stored in ./server/back/config.json
 npm run start:back "$SHEET_ID"
 npm run start:front
 ```
 
 You can then open `http://[host address]:12011` where `host address` is the address displayed in the stdout of the command `npm run start:front`.
+
+### Upload the screenshots
+
+The titan's page looks like this:
+
+![titans page](./doc/titans_page.png)
+
+The wars page looks like this:
+
+![wars page](./doc/wars_page.png)
 
 ## Roadmap
 
