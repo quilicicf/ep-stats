@@ -35,6 +35,9 @@ window.postTitansImage = () => {
   formData.append('file', file);
 
   const sendPromise = new Promise((resolve, reject) => {
+    const uploadErrorField = document.getElementById('titan-upload-error');
+    uploadErrorField.style.display = 'none';
+
     const xhr = new XMLHttpRequest();
     const { host } = document.location;
     xhr.open('POST', `http://${host.replace(/:[0-9]+/, ':12012')}/titans`, true);
@@ -44,10 +47,16 @@ window.postTitansImage = () => {
         return resolve(JSON.parse(xhr.responseText).message);
       }
 
+      uploadErrorField.innerText = xhr.responseText;
+      uploadErrorField.style.display = 'block';
       return reject();
     };
 
-    xhr.onerror = () => reject();
+    xhr.onerror = () => {
+      uploadErrorField.innerText = 'Unknown error';
+      uploadErrorField.style.display = 'block';
+      reject();
+    };
 
     xhr.send(formData);
   });
