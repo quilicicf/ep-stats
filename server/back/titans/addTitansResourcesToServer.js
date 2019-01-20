@@ -44,10 +44,25 @@ module.exports = (app, sheetId) => {
       await rename(request.file.path, fileNewPath);
       process.stdout.write(`File written to ${fileNewPath}\n`);
 
-      const members = await listMembers(sheetId);
+    } catch (renameError) {
+      process.stderr.write(renameError);
+      response.status(500);
+      response.send(renameError.message);
+    }
+
+    const members = await listMembers(sheetId);
+
+    try {
       const scoresByNames = parseOcr(members, fileNewPath);
       const scores = _.values(scoresByNames);
       const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
+
+      if (totalScore > life) {
+        response.status(422);
+        response.send(`Titan life is ${life}, total score is ${totalScore}. We had a problem Houston`);
+        return;
+      }
+
       const values = [ formattedDate, totalScore, life, stars, color, ...scores ];
 
       const range = `Titans_${year}`;
@@ -57,12 +72,13 @@ module.exports = (app, sheetId) => {
 
       } catch (gsheetError) {
         process.stderr.write(gsheetError);
-        response.send(500);
+        response.status(500);
+        response.send(gsheetError.message);
       }
-
-    } catch (renameError) {
-      process.stderr.write(renameError);
-      response.send(500);
+    } catch (parsingError) {
+      process.stderr.write(parsingError);
+      response.status(500);
+      response.send(parsingError.message);
     }
   });
 };
