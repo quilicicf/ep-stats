@@ -4,6 +4,7 @@ const { resolve: resolvePath } = require('path');
 const { parse: parseDate, format: formatDate } = require('date-fns');
 
 const rename = require('../../../lib/rename');
+const ocrFile = require('../../../lib/ocrFile');
 const parseOcr = require('../../../lib/parseOcr');
 const append = require('../../../lib/gsheet/append');
 const listMembers = require('../../../lib/listMembers');
@@ -40,7 +41,8 @@ module.exports = (app, sheetId) => {
       process.stdout.write(`File written to ${fileNewPath}\n`);
 
       const members = await listMembers(sheetId);
-      const scoresByNames = parseOcr(members, fileNewPath);
+      const ocrResult = ocrFile(fileNewPath);
+      const scoresByNames = parseOcr(members, ocrResult);
       const scores = _.values(scoresByNames);
       const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
       const values = [ formattedDate, totalScore, enemyScore, bonus, ...scores ];

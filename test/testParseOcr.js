@@ -1,5 +1,6 @@
 const { resolve: resolvePath } = require('path');
 
+const readFile = require('../lib/readFile');
 const parseOcr = require('../lib/parseOcr');
 
 const members = {
@@ -18,8 +19,13 @@ const members = {
 const dataPath = resolvePath(__dirname, 'data', 'ocrTest.txt');
 
 const main = async () => {
-  const result = await parseOcr(members, dataPath);
+  const ocrResult = await readFile(dataPath);
+  const result = await parseOcr(members, ocrResult);
   console.log(JSON.stringify(result, null, 2));
 };
 
-main();
+try {
+  main();
+} catch (error) {
+  throw error;
+}

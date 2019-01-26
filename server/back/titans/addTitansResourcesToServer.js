@@ -3,10 +3,11 @@ const multer = require('multer');
 const { resolve: resolvePath } = require('path');
 const { parse: parseDate, format: formatDate } = require('date-fns');
 
-const listMembers = require('../../../lib/listMembers');
 const rename = require('../../../lib/rename');
+const ocrFile = require('../../../lib/ocrFile');
 const parseOcr = require('../../../lib/parseOcr');
 const append = require('../../../lib/gsheet/append');
+const listMembers = require('../../../lib/listMembers');
 
 const { DAY_ID_FORMAT } = require('../constants');
 
@@ -53,7 +54,8 @@ module.exports = (app, sheetId) => {
     const members = await listMembers(sheetId);
 
     try {
-      const scoresByNames = parseOcr(members, fileNewPath);
+      const ocrResult = ocrFile(fileNewPath);
+      const scoresByNames = parseOcr(members, ocrResult);
       const scores = _.values(scoresByNames);
       const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
 
