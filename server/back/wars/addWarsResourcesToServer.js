@@ -42,7 +42,7 @@ module.exports = (app, sheetId) => {
 
       const members = await listMembers(sheetId);
       const ocrResult = ocrFile(fileNewPath);
-      const scoresByNames = parseOcr(members, ocrResult);
+      const scoresByNames = parseOcr(members, ocrResult, true /* allowsNonParticipating */);
       const scores = _.values(scoresByNames);
       const totalScore = _.reduce(scores, (seed, score) => (_.isNumber(score) ? seed + score : seed), 0);
       const values = [ formattedDate, totalScore, enemyScore, bonus, ...scores ];
@@ -54,12 +54,14 @@ module.exports = (app, sheetId) => {
 
       } catch (gsheetError) {
         process.stderr.write(gsheetError);
-        response.send(500);
+        response.status(500);
+        response.send(gsheetError.message);
       }
 
     } catch (renameError) {
       process.stderr.write(renameError);
-      response.send(500);
+      response.status(500);
+      response.send(renameError.message);
     }
   });
 };
