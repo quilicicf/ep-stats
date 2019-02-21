@@ -24,6 +24,7 @@
     "ocr": "4.0.23",
     "parcel-bundler": "1.11.0",
     "popper": "1.0.1",
+    "string-similarity": "3.0.0",
     "verbal-expressions": "1.0.0"
   },
   "devDependencies": {
