@@ -71,11 +71,14 @@ typings/
 /.cache
 /dist
 
+# Processed images
+/archive
+
 # Uploaded content
 /server/back/*/files
 
-# Server configuration
-/server/back/config.json
+# Configuration
+/config.json
 
 # Sensitive
 credentials.json

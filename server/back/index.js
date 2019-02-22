@@ -4,8 +4,8 @@ const { address } = require('ip');
 const express = require('express');
 const { resolve: resolvePath } = require('path');
 
-const readFile = require('../../lib/readFile');
-const writeFile = require('../../lib/writeFile');
+const readFile = require('../../lib/fs/readFile');
+const writeFile = require('../../lib/fs/writeFile');
 const addWarsResourcesToServer = require('./wars/addWarsResourcesToServer');
 const addTitansResourcesToServer = require('./titans/addTitansResourcesToServer');
 

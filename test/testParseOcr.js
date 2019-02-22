@@ -1,7 +1,7 @@
 const { resolve: resolvePath } = require('path');
 
-const readFile = require('../lib/readFile');
-const parseOcr = require('../lib/parseOcr');
+const readFile = require('../lib/fs/readFile');
+const parseOcr = require('../lib/ep/parseOcr');
 
 const members = {
   Argonythe: { pseudo: 'Argonythe', regexAsString: '' },

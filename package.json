@@ -12,12 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "4.2.1",
+    "bootstrap": "4.3.1",
     "date-fns": "2.0.0-alpha.27",
     "express": "4.16.4",
     "flatpickr": "4.5.2",
     "font-awesome": "4.7.0",
-    "googleapis": "27.0.0",
+    "googleapis": "37.2.0",
+    "image-size": "0.7.2",
+    "inquirer": "6.2.2",
     "ip": "1.1.5",
     "lodash": "4.17.11",
     "multer": "1.4.1",
@@ -28,9 +30,9 @@
     "verbal-expressions": "1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.2.2",
+    "@babel/core": "7.3.3",
     "@babel/plugin-transform-runtime": "7.2.0",
-    "@babel/runtime": "7.2.0",
+    "@babel/runtime": "7.3.1",
     "@talend/eslint-config": "2.0.1",
     "babel-eslint": "9.0.0",
     "eslint": "5.6.0",
@@ -38,6 +40,6 @@
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "21.22.0",
     "node-sass": "4.11.0",
-    "sass": "1.16.0"
+    "sass": "1.17.0"
   }
 }
