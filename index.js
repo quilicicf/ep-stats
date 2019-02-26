@@ -1,51 +1,40 @@
 #!/usr/bin/env node
 
 const _ = require('lodash');
-const { homedir } = require('os');
 const { resolve: resolvePath } = require('path');
 
-const readDir = require('./lib/fs/readDir');
+const listMembers = require('./lib/ep/listMembers');
+const uploadScore = require('./lib/ep/uploadScore');
 const patchConfig = require('./lib/cli/patchConfig');
 const selectScreenshots = require('./lib/cli/selectScreenshots');
 const extractHeader = require('./lib/image-processing/extractHeader');
 const getImageProcessor = require('./lib/image-processing/getImageProcessor');
 
-const APP_CONFIG = require('./lib/cli/appConfig');
-
 const CONFIG_PATH = resolvePath(__dirname, 'config.json');
+
+const processScreenshot = async (selectedScreenshot, members) => {
+  const header = extractHeader(selectedScreenshot);
+  const { type, processor } = getImageProcessor(header);
+
+  const result = await processor({ ...selectedScreenshot, members });
+  return { [ type ]: result };
+};
 
 const main = async () => {
   const patchedConfig = await patchConfig(CONFIG_PATH);
   const selectedScreenshots = await selectScreenshots(patchedConfig);
   console.log(JSON.stringify(selectedScreenshots, null, 2));
 
-  const infoScreenshot = selectedScreenshots[ 0 ];
-  const infoHeader = extractHeader(infoScreenshot);
-  const infoProcessor = getImageProcessor(infoHeader);
-  const info = await infoProcessor(infoScreenshot);
+  const members = await listMembers(patchedConfig);
+  const resultPromises = _.map(
+    selectedScreenshots,
+    selectedScreenshot => processScreenshot(selectedScreenshot, members),
+  );
 
-  const hitsScreenshot = selectedScreenshots[ 1 ];
-  const hitsHeader = extractHeader(hitsScreenshot);
-  const hitsProcessor = getImageProcessor(hitsHeader);
-  const hits = await hitsProcessor(hitsScreenshot);
-
-  console.log(JSON.stringify(info));
-  console.log(JSON.stringify(hits));
-
-  // const imageNamesWithExtensions = await readDir(FILES_PATH, file => /IMG_[0-9]+\.png/.test(file));
-  //
-  // const promises = _(imageNamesWithExtensions)
-  //   .map((imageNameWithExtension) => {
-  //     const imagePath = resolvePath(FILES_PATH, imageNameWithExtension);
-  //     const imageName = imageNameWithExtension.replace(/\.[^.]+$/, '');
-  //
-  //     const imageProcessor = getImageProcessor(header);
-  //
-  //     return imageProcessor(imagePath, imageName, imageSize);
-  //   })
-  //   .value();
-  //
-  // const results = await Promise.all(promises);
+  const items = await Promise.all(resultPromises);
+  const result = _.reduce(items, (seed, item) => ({ ...seed, ...item }), {});
+  uploadScore(result, patchedConfig);
+  console.log(JSON.stringify(result, null, 2));
 };
 
 try {
