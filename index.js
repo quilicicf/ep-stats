@@ -28,12 +28,17 @@ const main = async () => {
   const selectedScreenshots = await selectScreenshots(patchedConfig);
 
   const members = await listMembers(patchedConfig);
-  const resultPromises = _.map(
+  const resultPromise = _.reduce(
     selectedScreenshots,
-    selectedScreenshot => processScreenshot(selectedScreenshot, members),
+    (promise, selectedScreenshot) => promise
+      .then(seed => (
+        processScreenshot(selectedScreenshot, members)
+          .then(item => [ ...seed, item ])
+      )),
+    Promise.resolve([]),
   );
 
-  const items = await Promise.all(resultPromises);
+  const items = await resultPromise;
   const result = _.reduce(items, (seed, item) => ({ ...seed, ...item }), {});
 
   await uploadScoreAndUpdateCache(result, patchedConfig, CACHE_PATH);
