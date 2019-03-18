@@ -45,6 +45,7 @@
     "eslint-config-airbnb": "16.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "21.22.0",
+    "inquirer-autocomplete-prompt": "1.0.1",
     "node-sass": "4.11.0",
     "sass": "1.17.0"
   }
