@@ -80,6 +80,9 @@ typings/
 # Data cache
 /cache.json
 
+# OCR files
+/lib/ocr/user_words.txt
+
 # Sensitive
 credentials.json
 token.json
