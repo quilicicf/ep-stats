@@ -17,11 +17,11 @@ const getImageProcessor = require('./lib/image-processing/getImageProcessor');
 const CACHE_PATH = resolvePath(__dirname, 'cache.json');
 const CONFIG_PATH = resolvePath(__dirname, 'config.json');
 
-const processScreenshot = async (selectedScreenshot, members) => {
-  const header = extractHeader(selectedScreenshot);
+const processScreenshot = async (screenshot, members, appConfig) => {
+  const header = extractHeader({ screenshot, appConfig });
   const { type, processor } = getImageProcessor(header);
 
-  const result = await processor({ ...selectedScreenshot, members });
+  const result = await processor({ screenshot, members, appConfig });
   return { [ type ]: result };
 };
 
@@ -36,7 +36,7 @@ const main = async () => {
     selectedScreenshots,
     (promise, selectedScreenshot) => promise
       .then(seed => (
-        processScreenshot(selectedScreenshot, members)
+        processScreenshot(selectedScreenshot, members, patchedConfig)
           .then(item => [ ...seed, item ])
       )),
     Promise.resolve([]),
