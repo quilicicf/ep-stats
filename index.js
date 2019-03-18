@@ -6,6 +6,8 @@ const { resolve: resolvePath } = require('path');
 const listMembers = require('./lib/ep/listMembers');
 const uploadScoreAndUpdateCache = require('./lib/ep/uploadScoreAndUpdateCache');
 
+const configureOcrUserWords = require('./lib/ocr/configureOcrUserWords');
+
 const patchConfig = require('./lib/cli/config/patchConfig');
 const selectScreenshots = require('./lib/cli/selectScreenshots');
 
@@ -28,6 +30,8 @@ const main = async () => {
   const selectedScreenshots = await selectScreenshots(patchedConfig);
 
   const members = await listMembers(patchedConfig);
+  await configureOcrUserWords(_.keys(members));
+
   const resultPromise = _.reduce(
     selectedScreenshots,
     (promise, selectedScreenshot) => promise
