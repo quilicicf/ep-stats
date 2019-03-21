@@ -21,7 +21,7 @@ const dataPath = resolvePath(__dirname, 'data', 'ocrTest.txt');
 const main = async () => {
   const ocrResult = await readFile(dataPath);
   const result = await parseOcr(members, ocrResult);
-  console.log(JSON.stringify(result, null, 2));
+  process.stdout.write(JSON.stringify(result, null, 2));
 };
 
 try {

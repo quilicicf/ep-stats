@@ -7,6 +7,7 @@
     "ep-stats": "index.js"
   },
   "scripts": {
+    "lint": "eslint '**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "bootstrap": "node ./lib/gsheet/authorization/index.js",
     "start:front": "parcel serve --port 12011 ./server/front/index.html",
@@ -23,6 +24,7 @@
     "flatpickr": "4.5.2",
     "font-awesome": "4.7.0",
     "googleapis": "37.2.0",
+    "histogram": "3.0.3",
     "image-size": "0.7.2",
     "inquirer": "6.2.2",
     "inquirer-datepicker-prompt": "0.4.2",
