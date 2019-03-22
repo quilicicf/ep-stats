@@ -1,20 +1,33 @@
 {
   "name": "ep-stats",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Statistics parser for empires & puzzles",
+  "preferGlobal": true,
   "bin": {
     "ep-stats": "index.js"
   },
   "scripts": {
     "lint": "eslint '**/*.js'",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "bootstrap": "node ./lib/gsheet/authorization/index.js",
-    "start:front": "parcel serve --port 12011 ./server/front/index.html",
-    "start:back": "node ./server/back/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quilicicf/ep-stats.git"
+  },
+  "keywords": [
+    "empires",
+    "puzzles",
+    "statistics",
+    "stats",
+    "parser",
+    "ocr"
+  ],
+  "author": "quilicicf <quilicicf@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/quilicicf/ep-stats/issues"
+  },
+  "homepage": "https://github.com/quilicicf/ep-stats",
   "dependencies": {
     "@sindresorhus/jimp": "0.3.0",
     "chalk": "2.4.2",
