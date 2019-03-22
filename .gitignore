@@ -67,13 +67,6 @@ typings/
 
 ## App's ignores
 
-# Parcel
-/.cache
-/dist
-
-# Uploaded content
-/server/back/*/files
-
 # Configuration
 /config.json
 
