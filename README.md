@@ -18,24 +18,64 @@ As a serious E&P player, I wanted to get insights into how my alliance - and its
 
 The only summary the games gives you is a message in the alliance chat.
 
-This project takes a screenshot of the results, [OCR](https://en.wikipedia.org/wiki/Optical_character_recognition)'s it to retrieve the information as text and pushes it on a GSheet.
-
-One can then create graphs to show the members' performance against time.
+This project takes a screenshot of the results, [OCR](https://en.wikipedia.org/wiki/Optical_character_recognition)'s it to retrieve the information as text and pushes it on a GSheet where it can be analyzed.
 
 ## How it does it
 
-The project contains an HTTP server that serves a page where one can upload the screenshot of the war/titan results.
+The project contains a CLI tool that lets the user select screenshots and extracts the relevant information before pushing it on a pre-configured gsheet.
 
 It uses [tesseract](https://github.com/tesseract-ocr/tesseract/wiki) to get the information from the image and the GSheet API to push the stats on a GSheet.
 
-## How to run it
+It also uses [imagemagick](https://www.imagemagick.org/) to pre-process the images before feeding them to tesseract. The manipulations done are basically extracting parts of the image and threshold-ing it because OCR works way better on black and white.
 
+## Limitations
+
+### Linux-only
+
+This tool currently only runs on Linux. This is due to the fact that tesseract currently only runs on linux. It _can_ be used on mac but I've never tried it and don't own a genius' laptop.
+
+Windows is off-limits too ATM.
+
+This may change if someone is interested in helping me make the program run on other platforms. It would involve plugging in another OCR tool for windows and switching the image conversions to JS native (which should be easy-enough using [Jimp](https://www.npmjs.com/package/jimp) though).
+
+### Screenshot size
+
+The program currently only supports the definition 1536x2048 (iPad mini).
+
+You can add you own profile in the folder `lib/image-processing/profiles` like it was done for the iPad resolution.
+
+This implies copying the file `lib/image-processing/profiles/1536x2048.js` to a file named `${WIDTH}x${HEIGHT}.js` and modifying the values to fit your resolution. 
+
+You also need to register it in `lib/image-processing/profiles/availableProfiles.js`.
+
+More information about how to find the values [here](doc/screenshot_profiles.md).
+
+## Usage
+
+How I use it:
+
+* I screenshot titan info (as soon as a titan appears), war info (when the war is over to have the enemy score) and hit info (from the chat). More info about what to screenshot and how [here](./doc/screenshot_profiles.md)
+* The screenshots are synced (via google photos for me, use any solution you like) to my laptop (all in a single folder!)
+* Once in a while, I use ep-stats to process the screenshots and upload the stats to my spread sheet.
+
+## Sneak peak
+
+### What do stats look like?
+
+![Spreadsheet look](./doc/images/spreadsheet.png)
+
+### CLI tool usage
+
+![Usage gif](./doc/videos/ep_stats_usage.gif)
+
+## How to run it
 
 ### Pre-requisites
 
 You'll need to install
 
 * [tesseract](https://github.com/tesseract-ocr/tesseract/wiki)
+* [imagemagick](https://www.imagemagick.org/script/download.php)
 * [NodeJS](https://nodejs.org/en/download/)
 * [git](https://github.com/git/git)
 
@@ -43,68 +83,86 @@ You'll need to install
 
 Create a google spreadsheet from your google account.
 
-:warning: You'll need to keep this spreadsheet up-to-date when a new player joins in! Otherwise his stats won't be added.
+> :warning: You'll need to keep this spreadsheet up-to-date when a new player joins in! Otherwise his stats won't be added. I have plans to make the program yell at users when that occurs but currently, it'll just push incomplete data to the gsheet.
 
 #### Add members
 
 Create a sheet named `Members` that looks like this:
 
-|Pseudo|Regex|
-|---|---|
-|PseudoOfPlayer1||
-|PseudoOfPlayer2||
-|PseudoOfPlayer3||
-|PseudoOfPlayer4||
-
-The regex field should only be used if tesseract has troubles parsing the name of a player.
-
-Example: If `ImMaryPoppinsYall` gets parsed as `|mMaryPoppinsYa|l`, you can put the regex `[|Il]mMaryPoppinsYa[|Il]{2}` to fix the parsed results.
+|Pseudo|
+|---|
+|PseudoOfPlayer1|
+|PseudoOfPlayer2|
+|PseudoOfPlayer3|
+|PseudoOfPlayer4|
+|...|
+|PseudoOfPlayer30|
 
 #### Wars
 
-Create a sheet name `Wars_<YEAR>` that looks like the example below. Only crate the header row, the rest will be created by the program (the second line is here to show an example of the data).
+Create a sheet name `Wars` that looks like the example below. Only create the header row, the rest will be created by the program (the second line is here to show an example of the data).
 
-|War date \ Member|Total|Enemy score|Bonus|PseudoOfPlayer1|PseudoOfPlayer2|...|
-|---|---|---|---|---|---|---|
-|24_12|2456|3201|ARROWS|123|437|...|
+The order of the members pseudos must be the same as in the sheet `Members`.
+
+|War date|Total|Enemy score|Bonus|Members|PseudoOfPlayer1|PseudoOfPlayer2|...|
+|---|---|---|---|---|---|---|---|
+|24_12|2456|3201|ARROWS|27|123|437|...|
 
 #### Titans
 
-Create a sheet name `Titans_<YEAR>` that looks like the example below. Only crate the header row, the rest will be created by the program (the second line is here to show an example of the data).
+Create a sheet name `Titans` that looks like the example below. Only create the header row, the rest will be created by the program (the second line is here to show an example of the data).
 
-|Titan date \ Member|Total|Life|Stars|Color|PseudoOfPlayer1|PseudoOfPlayer2|...|
-|---|---|---|---|---|---|---|---|
-|24_12|1327000|1327000|6|HOLY|77000|144524|...|
+The order of the members pseudos must be the same as in the sheet `Members`.
 
-### Configure and run the server
+|Titan date|Total|Life|Stars|Color|Members|PseudoOfPlayer1|PseudoOfPlayer2|...|
+|---|---|---|---|---|---|---|---|---|
+|24_12|1327000|1327000|6|HOLY|27|77000|144524|...|
+
+#### Analyse the data
+
+You can analyse it the way you want, ep-stats will just feed the sheets above. Add any other sheet you like and hack away! 
+
+I'll explain my configuration here when I get the time.
+
+### Configure the spreadsheet
+
+You need to give ep-stats access to Google's API on your account so that it can push to the spreadsheet. This is done once at first run then stored for later use.
 
 ```shell
+# Install ep-stats
 git clone git@github.com:quilicicf/ep-stats.git
 cd ep-stats
-npm install
+npm link # Will be uploaded to npm when stable enough
 
-# At first launch only, allow ep-stats to push on you spreadsheet
-# When your internet browser opens, log in to the account with which you craeted the sheet of course
+# At first launch only, allow ep-stats to push on your spreadsheet
+# When your internet browser opens, log in to the account with which you created the sheet of course
 npm run bootstrap
 
 # Get the value of SHEET_ID from the URL of your sheet that looks like this:
 # https://docs.google.com/spreadsheets/d/$SHEET_ID/edit#gid=0
-# It is only required at first launch and will be stored in ./server/back/config.json
-npm run start:back "$SHEET_ID"
-npm run start:front
+# It is only required at first launch and will be stored in ./config.json
+# You'll need it in next section
 ```
 
-You can then open `http://[host address]:12011` where `host address` is the address displayed in the stdout of the command `npm run start:front`.
+### Run the program
 
-### Upload the screenshots
+```shell
+# The first time, you will be asked for the sheet id and 
+# for the path to the folder where you put your screenshot
+ep-stats
+```
 
-The titan's page looks like this:
+### Upgrade ep-stats
 
-![titans page](./doc/titans_page.png)
+To upgrade ep-stats, you need to pull the latest `master`. 
 
-The wars page looks like this:
+```shell
+cd $EP_STATS_REPO_PATH
+git fetch
+git pull
+```
 
-![wars page](./doc/wars_page.png)
+> Needless to say, you should stay on master at all times
 
 ## Roadmap
 
@@ -121,4 +179,12 @@ The wars page looks like this:
 
 ### TODO
 
-- [ ] Auto sheet creation for new year
+> The order below does not indicate priority
+
+- [ ] Add a dummy gsheet to copy instead of long instructions
+- [ ] Auto-create screenshot profiles
+- [ ] Push to npm
+- [ ] Create a post on small giant forum
+- [ ] Fail when there are more members parsed than present on the spreadsheet
+- [ ] Don't show already parsed images? (not sure about this one)
+- [ ] Try to validate scores (see what's doable)
