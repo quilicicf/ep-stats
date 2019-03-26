@@ -181,6 +181,7 @@ git pull
 
 > The order below does not indicate priority
 
+- [ ] Better logs for pushed data (currently badly formatted list)
 - [ ] Add a dummy gsheet to copy instead of long instructions
 - [ ] Auto-create screenshot profiles
 - [ ] Push to npm
