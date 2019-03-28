@@ -181,6 +181,7 @@ git pull
 
 > The order below does not indicate priority
 
+- [ ] Detect defeated titans if their life can't be guessed from the screenshot (in case it was taken after defeat)
 - [ ] Better logs for pushed data (currently badly formatted list)
 - [ ] Add a dummy gsheet to copy instead of long instructions
 - [ ] Auto-create screenshot profiles
