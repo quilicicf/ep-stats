@@ -39,6 +39,7 @@
     "inquirer-autocomplete-prompt": "1.0.1",
     "inquirer-datepicker-prompt": "0.4.2",
     "lodash": "4.17.11",
+    "rgb-hsv": "1.0.0",
     "string-similarity": "3.0.0"
   },
   "devDependencies": {
