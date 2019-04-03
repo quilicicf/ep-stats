@@ -14,13 +14,15 @@ const main = async () => {
     DARK: '892',
   };
 
-  const promises = _.map(
+  const promise = _.reduce(
     imagesToAnalyze,
-    (imageNumber, color) => analyzeNewTitanProfile(`/home/cyp/Downloads/Photos/IMG_0${imageNumber}.png`, titanColors[ color ]),
+    (seed, imageNumber, color) => {
+      return seed.then(() => analyzeNewTitanProfile(`/home/cyp/Downloads/Photos/IMG_0${imageNumber}.png`, titanColors[ color ]));
+    },
+    Promise.resolve(),
   );
 
-  await Promise.all(promises);
-  console.log();
+  await promise;
 };
 
 try {
