@@ -45,8 +45,7 @@ const main = async () => {
   const items = await resultPromise;
   const result = _.reduce(items, (seed, item) => ({ ...seed, ...item }), {});
 
-  const sentPayload = await uploadScoreAndUpdateCache(result, patchedConfig, CACHE_PATH);
-  process.stdout.write(`${JSON.stringify(sentPayload, null, 2)}\n`);
+  await uploadScoreAndUpdateCache(result, patchedConfig, CACHE_PATH);
 };
 
 try {
