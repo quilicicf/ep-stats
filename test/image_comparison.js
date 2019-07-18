@@ -11,7 +11,7 @@ const IMAGES_FOLDER = resolvePath(homedir(), 'Downloads', 'Photos');
 const PAD_LENGTH = 8;
 const HEAL_STRING = _.padEnd('HEAL', PAD_LENGTH);
 const ATTACK_STRING = _.padEnd('ATTACK', PAD_LENGTH);
-const ARROW_STRING = _.padEnd('ARROW', PAD_LENGTH);
+const ARROW_STRING = _.padEnd('ARROWS', PAD_LENGTH);
 
 const getImage = async (name) => {
   const imagePath = resolvePath(IMAGES_FOLDER, name);
