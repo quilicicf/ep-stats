@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const _ = require('lodash');
+const { red, green } = require('chalk');
 const { resolve: resolvePath } = require('path');
 
 const listMembers = require('./lib/ep/listMembers');
@@ -49,7 +50,7 @@ const main = async () => {
 };
 
 try {
-  main();
+  main().then(() => process.stdout.write(green('Everything done smoothly!\n')));
 } catch (error) {
-  throw error;
+  process.stderr.write(red(`You are a failure!\n${error.message}`));
 }
