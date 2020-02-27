@@ -75,6 +75,7 @@ typings/
 
 # OCR files
 /lib/ocr/user_words.txt
+/eng.traineddata
 
 # Sensitive
 credentials.json

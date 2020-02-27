@@ -31,7 +31,7 @@ const CACHE_PATH = resolvePath(__dirname, 'cache.json');
 const CONFIG_PATH = resolvePath(__dirname, 'config.json');
 
 const processInfoScreenshot = async (screenshot, members, appConfig) => {
-  const header = extractHeader({ screenshot, appConfig });
+  const header = await extractHeader({ screenshot, appConfig });
   const { processor } = getInfoImageProcessor(header);
   return processor({ screenshot, members, appConfig });
 };
@@ -66,7 +66,8 @@ const main = async () => {
 
   const holidays = await getEvents(patchedConfig);
 
-  const selectedHitsScreenshot = await selectScreenshot(patchedConfig, HITS, selectedInfoScreenshot.imageNameWithExtension);
+  const selectedHitsScreenshot =
+    await selectScreenshot(patchedConfig, HITS, selectedInfoScreenshot.imageNameWithExtension);
   const hits = await HITS_INFO.processor({
     screenshot: selectedHitsScreenshot, members, holidays, date: eventDate,
   });
