@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const _ = require('lodash');
-const Jimp = require('@sindresorhus/jimp');
+const Jimp = require('jimp');
 const { resolve: resolvePath } = require('path');
 const { homedir } = require('os');
 
@@ -96,8 +96,4 @@ const main = async () => {
   `);
 };
 
-try {
-  main();
-} catch (error) {
-  throw error;
-}
+main().catch(error => process.stderr.write(`${error.stack}\n`));
