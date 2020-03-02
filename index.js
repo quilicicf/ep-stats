@@ -69,7 +69,7 @@ const main = async () => {
   const selectedHitsScreenshot =
     await selectScreenshot(patchedConfig, HITS, selectedInfoScreenshot.imageNameWithExtension);
   const hits = await HITS_INFO.processor({
-    screenshot: selectedHitsScreenshot, members, holidays, date: eventDate,
+    screenshot: selectedHitsScreenshot, appConfig: patchedConfig, members, holidays, date: eventDate,
   });
 
   await uploadScore(info, hits, patchedConfig, formattedEventDate);
