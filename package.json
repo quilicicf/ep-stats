@@ -31,26 +31,26 @@
   "homepage": "https://github.com/quilicicf/ep-stats",
   "dependencies": {
     "axios": "0.19.2",
-    "chalk": "3.0.0",
-    "cli-progress": "3.6.0",
+    "chalk": "4.0.0",
+    "cli-progress": "3.7.0",
     "color-convert": "2.0.1",
-    "date-fns": "2.10.0",
-    "googleapis": "47.0.0",
+    "date-fns": "2.12.0",
+    "googleapis": "48.0.0",
     "image-size": "0.8.3",
-    "inquirer": "7.0.4",
+    "inquirer": "7.1.0",
     "inquirer-autocomplete-prompt": "1.0.2",
     "inquirer-datepicker-prompt": "0.4.2",
-    "jimp": "0.9.3",
+    "jimp": "0.10.2",
     "lodash": "4.17.15",
     "string-similarity": "4.0.1",
-    "tesseract.js": "2.0.2"
+    "tesseract.js": "2.1.1"
   },
   "devDependencies": {
     "@talend/eslint-config": "2.1.0",
     "babel-eslint": "10.1.0",
     "eslint": "6.8.0",
-    "eslint-config-airbnb": "18.0.1",
-    "eslint-plugin-import": "2.20.1",
-    "eslint-plugin-jest": "23.8.0"
+    "eslint-config-airbnb": "18.1.0",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-jest": "23.8.2"
   }
 }
