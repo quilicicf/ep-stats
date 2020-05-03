@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 
-const run = require('./lib/run');
+const yargs = require('yargs');
 
-const ONE_DAY_IN_MS = 1000 * 60 * 60 * 24;
+const runCommand = require('./lib/run');
+const masterCommandName = require('./lib/masterCommandName');
 
-const main = async () => {
-  run();
-  setInterval(() => {
-    run();
-  }, ONE_DAY_IN_MS);
-};
+/* eslint-disable no-unused-expressions */
+// noinspection BadExpressionStatementJS
+yargs.usage(`USAGE: ${masterCommandName} <command> [options]`)
 
-main();
+  .command(runCommand)
+
+  .help()
+  .wrap(null)
+  .version()
+  .argv;
