@@ -41,7 +41,8 @@
     "jimp": "0.10.2",
     "lodash": "4.17.15",
     "string-similarity": "4.0.1",
-    "tesseract.js": "2.1.1"
+    "tesseract.js": "2.1.1",
+    "yargs": "15.3.1"
   },
   "devDependencies": {
     "@talend/eslint-config": "2.1.0",
