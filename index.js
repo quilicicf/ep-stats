@@ -2,7 +2,7 @@
 
 const yargs = require('yargs');
 
-const runCommand = require('./lib/run');
+const runCommand = require('./lib/commands/run');
 const masterCommandName = require('./lib/masterCommandName');
 
 /* eslint-disable no-unused-expressions */
