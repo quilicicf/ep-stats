@@ -129,6 +129,8 @@ More information about how to find the values [here](doc/screenshot_profiles.md)
 
 ```shell
 npm install --global @quilicicf/ep-stats
+# You can run the following command to make sure the installation was OK
+ep-stats --help
 ```
 
 ## Initialization
