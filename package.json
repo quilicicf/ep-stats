@@ -38,7 +38,7 @@
     "googleapis": "49.0.0",
     "inquirer": "7.1.0",
     "inquirer-datepicker-prompt": "0.4.2",
-    "jimp": "0.10.2",
+    "jimp": "0.10.3",
     "lodash": "4.17.15",
     "string-similarity": "4.0.1",
     "tesseract.js": "2.1.1",
