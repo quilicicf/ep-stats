@@ -1,5 +1,7 @@
 # Changelog
 
+* __2.0.1:__
+  * :triangular_ruler: Store OCR trained data in ep-stats' configuration folder
 * __2.0.0:__ 
   * :new: Add a special command to initialize the Google authentication instead of a npm script
   * :up: Switch to non-interactive process by pulling the screenshots from Google Photos API
