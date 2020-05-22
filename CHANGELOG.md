@@ -1,5 +1,7 @@
 # Changelog
 
+* __2.0.2:__
+  * :arrow_up::lock: Upgrade dependencies
 * __2.0.1:__
   * :triangular_ruler: Store OCR trained data in ep-stats' configuration folder
 * __2.0.0:__ 
