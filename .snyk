@@ -1,0 +1,14 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.16.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - lodash:
+        patched: '2020-06-24T12:53:38.728Z'
+    - inquirer > lodash:
+        patched: '2020-06-24T12:53:38.728Z'
+    - inquirer-datepicker-prompt > lodash:
+        patched: '2020-06-24T12:53:38.728Z'
+    - inquirer-datepicker-prompt > inquirer > lodash:
+        patched: '2020-06-24T12:53:38.728Z'
