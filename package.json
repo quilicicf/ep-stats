@@ -37,7 +37,7 @@
     "color-convert": "2.0.1",
     "date-fns": "2.14.0",
     "googleapis": "52.1.0",
-    "inquirer": "7.2.0",
+    "inquirer": "7.3.0",
     "inquirer-datepicker-prompt": "0.4.2",
     "jimp": "0.13.0",
     "lodash": "4.17.15",
