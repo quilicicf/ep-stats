@@ -44,7 +44,7 @@
     "string-similarity": "4.0.1",
     "tesseract.js": "2.1.1",
     "yargs": "15.3.1",
-    "snyk": "^1.348.1"
+    "snyk": "^1.348.2"
   },
   "devDependencies": {
     "@talend/eslint-config": "2.1.0",
