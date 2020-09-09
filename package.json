@@ -40,7 +40,7 @@
     "inquirer": "7.2.0",
     "inquirer-datepicker-prompt": "0.4.2",
     "jimp": "0.13.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.20",
     "string-similarity": "4.0.1",
     "tesseract.js": "2.1.1",
     "yargs": "15.3.1",
