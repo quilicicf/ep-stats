@@ -1,2 +1,3 @@
 extends: '@talend/eslint-config/api-packaging.yaml'
+parser: '@babel/eslint-parser'
 root: true

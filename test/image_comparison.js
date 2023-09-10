@@ -59,7 +59,7 @@ const diffLine = (referenceImage, otherImage, lineIndex) => {
   return unweightedDiff / 24;
 };
 
-const toPercentage = fraction => Math.round(fraction * 100);
+const toPercentage = (fraction) => Math.round(fraction * 100);
 
 const compareImages = (referenceImage, otherImage) => {
   const resizedOtherImage = otherImage.resize(24, 24);
@@ -96,4 +96,4 @@ const main = async () => {
   `);
 };
 
-main().catch(error => process.stderr.write(`${error.stack}\n`));
+main().catch((error) => process.stderr.write(`${error.stack}\n`));
