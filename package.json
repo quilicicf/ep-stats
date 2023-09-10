@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint '**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },
   "repository": {
@@ -39,15 +39,15 @@
     "googleapis": "52.1.0",
     "inquirer": "8.2.6",
     "inquirer-datepicker-prompt": "0.4.3",
-    "jimp": "0.13.0",
+    "jimp": "0.22.10",
     "lodash": "4.17.21",
     "string-similarity": "4.0.1",
     "tesseract.js": "2.1.1",
-    "yargs": "17.7.2",
-    "snyk": "^1.1215.0"
+    "yargs": "17.7.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.22.15",
+    "@snyk/protect": "^1.1215.0",
     "@talend/eslint-config": "4.0.2",
     "eslint": "8.49.0",
     "eslint-config-airbnb": "19.0.4",
